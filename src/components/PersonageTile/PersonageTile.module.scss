@@ -1,0 +1,81 @@
+@import "styles/mainStyle.scss";
+.tile {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr;
+    width: 100%;
+    height: 300px;
+    background-color: $blackColor;
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        margin: 10px auto;
+        width: 100%;
+        &_name,
+        &_height,
+        &_mass,
+        &_hair_color,
+        &_skin_color,
+        &_eye_color,
+        &_birth_ear,
+        &_gender,
+        &_homeworld {
+            margin: auto;
+            color: $whiteColor;
+            @include font(14px, normal)
+        }
+    }
+    &__btn {
+        width: 120px;
+        height: 40px;
+        margin: auto;
+        background-color: $blackColor;
+        color: $whiteColor;
+        border: 1px solid $whiteColor;
+        border-radius: 15px;
+        &:hover {
+            background-color: black;
+        }
+    }
+}
+.tile_white {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr;
+    width: 100%;
+    height: 300px;
+    background-color: $whiteColor;
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        margin: 10px auto;
+        width: 100%;
+        &_name_white,
+        &_height_white,
+        &_mass_white,
+        &_hair_color_white,
+        &_skin_color_white,
+        &_eye_color_white,
+        &_birth_ear_white,
+        &_gender_white,
+        &_homeworld_white {
+            margin: auto;
+            color: $blackColor;
+            @include font(14px, normal)
+        }
+    }
+    &__btn_white {
+        width: 120px;
+        height: 40px;
+        margin: auto;
+        background-color: $whiteColor;
+        color: $blackColor;
+        border: 1px solid $blackColor;
+        border-radius: 15px;
+        &:hover {
+            background-color: black;
+        }
+    }
+}
