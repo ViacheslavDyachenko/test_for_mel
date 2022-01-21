@@ -9,7 +9,8 @@ export type PersonageTileApi = {
         birth_year: string,
         gender: string,
         homeworld: string,
-    },
+        url: string
+    }[],
     count: string
 }
 
@@ -24,23 +25,27 @@ export type PersonageTileModel = {
         birthYear: string,
         gender: string,
         homeworld: string,
-    },
+        url: string
+    }[],
     count: string
 }
 
 export const normalizePersonageItem = (from: PersonageTileApi): PersonageTileModel => {
+    const result = from.personage.map(item => {
+        return {name: item.name,
+                    height: item.height,
+                    mass: item.mass,
+                    hairColor: item.hair_color,
+                    skinColor: item.skin_color,
+                    eyeColor: item.eye_color,
+                    birthYear: item.birth_year,
+                    gender: item.gender,
+                    homeworld: item.homeworld,
+                    url: item.url
+                }
+    })
     return {
-        personage: {
-            name: from.personage.name,
-            height: from.personage.height,
-            mass: from.personage.mass,
-            hairColor: from.personage.hair_color,
-            skinColor: from.personage.skin_color,
-            eyeColor: from.personage.eye_color,
-            birthYear: from.personage.birth_year,
-            gender: from.personage.gender,
-            homeworld: from.personage.homeworld,
-        },
-        count: from.count
+        personage: result ,
+        count: from.count,
     }
 }

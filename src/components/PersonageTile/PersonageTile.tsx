@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import React from "react";
+import { Link } from "react-router-dom";
 import { StarWarsStore } from "store/StarWarsStore/StarWarsStore";
 import style from "./PersonageTile.module.scss"
 
@@ -13,7 +14,9 @@ interface IProps {
     birthYear: string,
     gender: string,
     homeworld: string,
-    index: number
+    index: number,
+    url: string
+    onClick: (event: React.MouseEvent) => void
 }
 
 interface IState {
@@ -35,7 +38,7 @@ class PersonageTile extends React.Component<IProps, IState> {
         }       
     }
 
-    render(): React.ReactNode { 
+    render(): React.ReactNode {         
         return (
             this.props.index % 2
             ? <div className={style.tile}>
@@ -50,7 +53,7 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile__content_gender}>Пол: {this.props.gender}</p>
                     <p className={style.tile__content_homeworld}>Родная планета: {this.state.name}</p>
                 </div>
-                <Button text="Узнать больше" buttonClassName="tile__btn" />
+                <Link className={style.tile__link} to={`/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile__btn" /></Link>
             </div>
             : <div className={style.tile_white}>
                 <div className={style.tile__content}>
@@ -64,7 +67,7 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile_white__content_gender_white}>Пол: {this.props.gender}</p>
                     <p className={style.tile_white__content_homeworld_white}>Родная планета: {this.state.name}</p>
                 </div>
-                <Button text="Узнать больше" buttonClassName="tile_white__btn_white" />
+                <Link className={style.tile__link} to={`/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile_white__btn_white" /></Link>
             </div>
         )
     }
