@@ -1,3 +1,4 @@
+import Button from "components/Button";
 import React from "react";
 import { StarWarsStore } from "store/StarWarsStore/StarWarsStore";
 import style from "./PersonageTile.module.scss"
@@ -35,8 +36,6 @@ class PersonageTile extends React.Component<IProps, IState> {
     }
 
     render(): React.ReactNode { 
-        console.log(this.state);
-               
         return (
             this.props.index % 2
             ? <div className={style.tile}>
@@ -51,7 +50,7 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile__content_gender}>Пол: {this.props.gender}</p>
                     <p className={style.tile__content_homeworld}>Родная планета: {this.state.name}</p>
                 </div>
-                <button className={style.tile__btn}>Узнать больше</button>
+                <Button text="Узнать больше" buttonClassName="tile__btn" />
             </div>
             : <div className={style.tile_white}>
                 <div className={style.tile__content}>
@@ -65,7 +64,7 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile_white__content_gender_white}>Пол: {this.props.gender}</p>
                     <p className={style.tile_white__content_homeworld_white}>Родная планета: {this.state.name}</p>
                 </div>
-                <button className={style.tile_white__btn_white}>Узнать больше</button>
+                <Button text="Узнать больше" buttonClassName="tile_white__btn_white" />
             </div>
         )
     }

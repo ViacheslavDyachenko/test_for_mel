@@ -6,7 +6,7 @@ export type GetPersonageListParams = {
 }
 
 export type ApiResp<PersonageTileApi> =  {success: boolean,
-                        data: PersonageTileApi[],
+                        data: PersonageTileApi,
                         status: number | StatusHTTP.BAD_STATUS}
 
 export type ApiRespHome<PersonageTileApi> =  {success: boolean,

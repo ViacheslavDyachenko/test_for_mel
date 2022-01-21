@@ -9,8 +9,8 @@ export class StarWarsStore implements IStarWarsStore {
     async getPersonageNextList(params: GetPersonageListParams, page: number): Promise<ApiResp<PersonageTileModel>> {
         let response = await this.apiStore.request<ApiResponse<PersonageTileApi, PersonageTileApi>>({method: HTTPMethod.GET, endpoint: `/api/${params.people}/?page=${page}`, headers: {}});        
         try {
-            response.data = await response.data.results.map((item: any) => {
-                return normalizePersonageItem({
+            response.data.personage = await response.data.results.map((item: any) => {
+                return {
                     name: item.name,
                     height: item.height,
                     mass: item.mass,
@@ -20,9 +20,12 @@ export class StarWarsStore implements IStarWarsStore {
                     birth_year: item.birth_year,
                     gender: item.gender,
                     homeworld: item.homeworld,
-                });
-            });           
-        } catch (e) {            
+                };
+            });
+            response.data.count = await response.data.count;            
+            response.data = response.data.map((item: any) => normalizePersonageItem({personage: item.personage, count: item.count}));
+            console.log(response.data);
+        } catch (e) {  
             return {success: response.success, data: response.data, status: response.status};
         }
 

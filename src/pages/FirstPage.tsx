@@ -1,3 +1,4 @@
+import Button from "components/Button";
 import PersonageTile from "components/PersonageTile";
 import React from "react"
 import { StarWarsStore } from "store/StarWarsStore/StarWarsStore";
@@ -18,7 +19,9 @@ interface IState {
         birthYear: string,
         gender: string,
         homeworld: string
-    }[]
+    }[],
+    page: number,
+    everythingIsLoaded: boolean
   }
 
 class FirstPage extends React.Component<IProps, IState> {
@@ -35,16 +38,33 @@ class FirstPage extends React.Component<IProps, IState> {
                 birthYear: '',
                 gender: '',
                 homeworld: '',
-            }]
+            }],
+            page: 1,
+            everythingIsLoaded: false
         };
     }
     starWars = new StarWarsStore();
     async componentDidMount() {
-        const result = await this.starWars.getPersonageNextList({people: 'people'}, 1);
+        const result = await this.starWars.getPersonageNextList({people: 'people'}, this.state.page);
+        let personageList = this.state.personageTile.concat(result.data.personage).filter(item => Boolean(item.name));
         this.setState({
-            personageTile: result.data
+            personageTile: personageList,
+            page: this.state.page + 1,
+            everythingIsLoaded: this.state.personageTile.length.toString() === result.data.count.toString()
         })        
     }
+
+    onClick = async () => {
+        const result = await this.starWars.getPersonageNextList({people: 'people'}, this.state.page);
+        let personageList = this.state.personageTile.concat(result.data.personage).filter(item => Boolean(item.name));
+        this.setState({
+            personageTile: personageList,
+            page: this.state.page + 1,
+            everythingIsLoaded: +personageList.length === +result.data.count
+        });
+        console.log(+personageList.length === +result.data.count);
+    }
+
     render(): React.ReactNode {
         return (
             <>
@@ -63,6 +83,8 @@ class FirstPage extends React.Component<IProps, IState> {
                         homeworld={item.homeworld}
                     />
                 })}
+                {!this.state.everythingIsLoaded
+                && <Button onClick={this.onClick} className={style.btn_position} buttonClassName="tile_white__btn_white" text="Загрузить ещё" />}
             </>
         )
     }

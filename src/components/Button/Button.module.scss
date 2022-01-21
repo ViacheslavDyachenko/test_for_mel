@@ -1,0 +1,26 @@
+@import "styles/mainStyle.scss";
+.tile__btn {
+    width: 120px;
+    height: 40px;
+    margin: auto;
+    background-color: $blackColor;
+    color: $whiteColor;
+    border: 1px solid $whiteColor;
+    border-radius: 15px;
+    &:hover {
+        background-color: black;
+    }
+}
+.tile_white__btn_white {
+    width: 120px;
+    height: 40px;
+    margin: auto;
+    background-color: $whiteColor;
+    color: $blackColor;
+    border: 1px solid $blackColor;
+    border-radius: 15px;
+    &:hover {
+        background-color: black;
+        color: $whiteColor;
+    }
+}
