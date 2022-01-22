@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Header from "components/Header";
+import Loader from "components/Loader";
 import PersonageTile from "components/PersonageTile";
 import DetailsPage from "pages/DetailsPage";
 import React from "react"
@@ -24,6 +25,7 @@ interface IState {
         url: string
     }[],
     page: number,
+    isLoaded: boolean,
     everythingIsLoaded: boolean,
     showDetails: boolean
   }
@@ -46,6 +48,7 @@ class FirstPage extends React.Component<IProps, IState> {
                 url: ''
             }],
             page: 1,
+            isLoaded: false,
             everythingIsLoaded: false,
             showDetails: this.props.showDetails
         };
@@ -59,6 +62,7 @@ class FirstPage extends React.Component<IProps, IState> {
             this.setState({
                 personageTile: personageList,
                 page: this.state.page + 1,
+                isLoaded: true,
                 everythingIsLoaded: +personageList.length === +result.data.count,
                 showDetails: this.props.showDetails
             })
@@ -70,11 +74,19 @@ class FirstPage extends React.Component<IProps, IState> {
     }
 
     onClick = async () => {
+        this.setState({
+            personageTile: this.state.personageTile,
+            page: this.state.page,
+            isLoaded: false,
+            everythingIsLoaded: this.state.everythingIsLoaded,
+            showDetails: this.state.showDetails
+        })
         const result = await this.starWars.getPersonageNextList({people: 'people'}, this.state.page);
         let personageList = this.state.personageTile.concat(result.data.personage)
         this.setState({
             personageTile: personageList,
             page: this.state.page + 1,
+            isLoaded: true,
             everythingIsLoaded: +personageList.length === +result.data.count,
             showDetails: this.props.showDetails
         });
@@ -84,6 +96,7 @@ class FirstPage extends React.Component<IProps, IState> {
         this.setState({
             personageTile: this.state.personageTile,
             page: this.state.page,
+            isLoaded: true,
             everythingIsLoaded: this.state.everythingIsLoaded,
             showDetails: true
         })
@@ -92,6 +105,7 @@ class FirstPage extends React.Component<IProps, IState> {
         this.setState({
             personageTile: this.state.personageTile,
             page: this.state.page,
+            isLoaded: true,
             everythingIsLoaded: this.state.everythingIsLoaded,
             showDetails: false
         })
@@ -121,8 +135,9 @@ class FirstPage extends React.Component<IProps, IState> {
                 })}
                 {this.state.showDetails
                 && <DetailsPage favorite={false} onClick={this.hiddenDetails} />}
+                {!this.state.isLoaded && <Loader style="block" height="50px" width="50px" />}
                 {!this.state.everythingIsLoaded
-                && <Button onClick={this.onClick} className={style.btn_position} buttonClassName="tile_white__btn_white" text="Загрузить ещё" />}
+                && <Button disabled={!this.state.isLoaded} onClick={this.onClick} className={style.btn_position} buttonClassName="tile_white__btn_white" text="Загрузить ещё" />}
             </>
         )
     }

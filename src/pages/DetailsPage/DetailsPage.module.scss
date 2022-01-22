@@ -1,5 +1,4 @@
 @import "styles/mainStyle.scss";
-.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px}
 .modal_window {
     position: relative;
     width: 500px;
@@ -66,5 +65,11 @@
     &__title {
         @include font(18px, normal);
         text-align: center;
+    }
+}
+@media all and (max-width: 400px) {
+    .modal_window__content {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(9, 1fr);
     }
 }

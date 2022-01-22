@@ -1,3 +1,4 @@
+import Loader from "components/Loader";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { StarWarsStore } from "store/StarWarsStore/StarWarsStore";
@@ -19,6 +20,7 @@ interface IState {
     homeworld: string;
     isLoad: boolean
     favorite: boolean
+    isLoaded: boolean,
 }
 
 function withParams(Component: any) {
@@ -40,7 +42,8 @@ class DetailsPage extends React.Component<IProps, IState> {
             gender: '',
             homeworld: '',
             isLoad: false,
-            favorite: this.props.favorite
+            favorite: this.props.favorite,
+            isLoaded: false,
         }
     }
     starWars = new StarWarsStore();
@@ -49,7 +52,7 @@ class DetailsPage extends React.Component<IProps, IState> {
         this._isMounted = true;
         const personageUrl = this.props.params;
         const result = await this.starWars.getPersonageInfo({people: 'people'}, personageUrl.url);
-        if(this._isMounted) this.setState({...result.data, isLoad: false});
+        if(this._isMounted) this.setState({...result.data, isLoad: false, favorite: this.state.favorite, isLoaded: true});
     }
 
     async componentDidUpdate() {
@@ -88,15 +91,15 @@ class DetailsPage extends React.Component<IProps, IState> {
                     </button>
                         <h1 className={style.modal_window__title}>Детальная информация</h1>
                         <div className={style.modal_window__content}>
-                            <p className={style.modal_window__content_name}>Имя: {this.state.name}</p>
-                            <p className={style.modal_window__content_height}>Рост: {this.state.height}</p>
-                            <p className={style.modal_window__content_mass}>Вес: {this.state.mass}</p>
-                            <p className={style.modal_window__content_hair_color}>Цвет волос: {this.state.hairColor}</p>
-                            <p className={style.modal_window__content_skin_color}>Цвет кожи: {this.state.skinColor}</p>
-                            <p className={style.modal_window__content_eye_color}>Цвет глаз: {this.state.eyeColor}</p>
-                            <p className={style.modal_window__content_birth_ear}>Год рождения: {this.state.birthYear}</p>
-                            <p className={style.modal_window__content_gender}>Пол: {this.state.gender}</p>
-                            <p className={style.modal_window__content_homeworld}>Родная планета: {this.state.homeworld}</p>
+                            <p className={style.modal_window__content_name}>Имя: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.name}</p>
+                            <p className={style.modal_window__content_height}>Рост: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.height}</p>
+                            <p className={style.modal_window__content_mass}>Вес: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.mass}</p>
+                            <p className={style.modal_window__content_hair_color}>Цвет волос: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.hairColor}</p>
+                            <p className={style.modal_window__content_skin_color}>Цвет кожи: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.skinColor}</p>
+                            <p className={style.modal_window__content_eye_color}>Цвет глаз: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.eyeColor}</p>
+                            <p className={style.modal_window__content_birth_ear}>Год рождения: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.birthYear}</p>
+                            <p className={style.modal_window__content_gender}>Пол: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.gender}</p>
+                            <p className={style.modal_window__content_homeworld}>Родная планета: {!this.state.isLoad ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.homeworld}</p>
                         </div>
                     </div>
                 </div>

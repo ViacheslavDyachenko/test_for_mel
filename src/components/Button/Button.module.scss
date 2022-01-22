@@ -10,6 +10,9 @@
     &:hover {
         background-color: black;
     }
+    &:disabled {
+        background-color: $greyColor;
+    }
 }
 .tile_white__btn_white {
     width: 120px;
@@ -22,5 +25,8 @@
     &:hover {
         background-color: black;
         color: $whiteColor;
+    }
+    &:disabled {
+        background-color: $greyColor;
     }
 }

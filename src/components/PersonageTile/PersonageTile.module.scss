@@ -95,3 +95,32 @@
         }
     }
 }
+@media all and (max-width: 640px) {
+    .tile__content,
+    .tile_white__content {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    }
+    .tile__content p,
+    .tile_white__content p {
+        margin: 0 50px ;
+    }
+    .tile__star_btn {
+        right: 30px;
+    }
+}
+@media all and (max-width: 570px) {
+    .tile,
+    .tile_white {
+        height: auto;
+    }
+    .tile__content,
+    .tile_white__content {
+        grid-template-columns: 1fr;
+        margin-top: 50px;
+    }
+    .tile__content p,
+    .tile_white__content p {
+        margin: 10px auto;
+    }
+}

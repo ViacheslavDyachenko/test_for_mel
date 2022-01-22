@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import Loader from "components/Loader";
 import StarIcon from "components/StarIcon";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -24,7 +25,8 @@ interface IProps {
 
 interface IState {
     name: string,
-    favorite: boolean
+    favorite: boolean,
+    isLoaded: boolean,
 }
 
 class PersonageTile extends React.Component<IProps, IState> {
@@ -33,7 +35,8 @@ class PersonageTile extends React.Component<IProps, IState> {
         super(props);
         this.state = {
             name: '',
-            favorite: this.props.favorite
+            favorite: this.props.favorite,
+            isLoaded: false
         };
     }
     starWars = new StarWarsStore();
@@ -42,7 +45,11 @@ class PersonageTile extends React.Component<IProps, IState> {
         if(this.props.homeworld) {
             const result = await this.starWars.getHomeworldNextList(this.props.homeworld.replace('https://swapi.dev/api/', ''));
             if(this._isMounted) {        
-                this.setState({name: result.data}); 
+                this.setState({
+                    name: result.data,
+                    favorite: this.state.favorite,
+                    isLoaded: true
+                }); 
             }
         }       
     }
@@ -103,12 +110,12 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile__content_eye_color}>Цвет глаз: {this.props.eyeColor}</p>
                     <p className={style.tile__content_birth_ear}>Год рождения: {this.props.birthYear}</p>
                     <p className={style.tile__content_gender}>Пол: {this.props.gender}</p>
-                    <p className={style.tile__content_homeworld}>Родная планета: {this.state.name}</p>
+                    <p className={style.tile__content_homeworld}>Родная планета: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.name}</p>
                 </div>
                 <Link className={style.tile__link} 
                 to={this.state.favorite 
                     ? `/favorites/${this.props.url.replace("https://swapi.dev/api/people/", "")}`
-                    : `/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile__btn" /></Link>
+                    : `/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button disabled={!this.state.isLoaded} onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile__btn" /></Link>
             </div>
             : <div className={style.tile_white}>
                 <div className={style.tile_white__content}>
@@ -121,12 +128,12 @@ class PersonageTile extends React.Component<IProps, IState> {
                     <p className={style.tile_white__content_eye_color_white}>Цвет глаз: {this.props.eyeColor}</p>
                     <p className={style.tile_white__content_birth_ear_white}>Год рождения: {this.props.birthYear}</p>
                     <p className={style.tile_white__content_gender_white}>Пол: {this.props.gender}</p>
-                    <p className={style.tile_white__content_homeworld_white}>Родная планета: {this.state.name}</p>
+                    <p className={style.tile_white__content_homeworld_white}>Родная планета: {!this.state.isLoaded ? <Loader style="inline-block" width="30px" height="30px" /> : this.state.name}</p>
                 </div>
                 <Link className={style.tile__link} 
                 to={this.state.favorite 
                     ? `/favorites/${this.props.url.replace("https://swapi.dev/api/people/", "")}`
-                    : `/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile_white__btn_white" /></Link>
+                    : `/${this.props.url.replace("https://swapi.dev/api/people/", "")}`}><Button disabled={!this.state.isLoaded} onClick={this.props.onClick} text="Узнать больше" buttonClassName="tile_white__btn_white" /></Link>
             </div>
         )
     }
