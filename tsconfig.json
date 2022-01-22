@@ -4,6 +4,7 @@
     "paths": {
       "components": ["components"],
       "images": ["images"],
+      "fonts": ["fonts"],
       "pages": ["pages"],
       "store": ["store"],
       "styles": ["styles"],

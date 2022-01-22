@@ -2,7 +2,7 @@ $blackColor: #343434;
 $whiteColor: white;
 
 @mixin font($size, $weight) {
-    font-family: 'Courier New', Courier, monospace, sans-serif;
+    font-family: monospace, sans-serif;
     font-size: $size;
     font-weight: $weight;
 }

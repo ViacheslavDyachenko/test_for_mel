@@ -1,11 +1,11 @@
-import FirstPage from "pages/FirstPage";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { StarWarsStore } from "store/StarWarsStore/StarWarsStore";
 import style from "./DetailsPage.module.scss"
 interface IProps {
     params?: any,
-    onClick: (event: React.MouseEvent) => void
+    onClick: (event: React.MouseEvent) => void,
+    favorite: boolean,
 }
 interface IState {
     name: string;
@@ -18,6 +18,7 @@ interface IState {
     gender: string;
     homeworld: string;
     isLoad: boolean
+    favorite: boolean
 }
 
 function withParams(Component: any) {
@@ -38,7 +39,8 @@ class DetailsPage extends React.Component<IProps, IState> {
             birthYear: '',
             gender: '',
             homeworld: '',
-            isLoad: false
+            isLoad: false,
+            favorite: this.props.favorite
         }
     }
     starWars = new StarWarsStore();
@@ -70,14 +72,20 @@ class DetailsPage extends React.Component<IProps, IState> {
     }
     componentWillUnmount() {
         this._isMounted = false;
-      }
+    }
 
     render(): React.ReactNode {
         return (
             <>
                 <div className={style.modal_window_bg}>
                     <div className={style.modal_window}>
-                    <button onClick={this.props.onClick} className={style.modal_window__close_btn}><Link className={style.modal_window__close_btn_link} to="/">X</Link></button>
+                    <button onClick={this.props.onClick} className={style.modal_window__close_btn}>
+                        <Link 
+                            className={style.modal_window__close_btn_link} 
+                            to={this.state.favorite
+                            ? "/favorites"
+                            : "/"}>X</Link>
+                    </button>
                         <h1 className={style.modal_window__title}>Детальная информация</h1>
                         <div className={style.modal_window__content}>
                             <p className={style.modal_window__content_name}>Имя: {this.state.name}</p>

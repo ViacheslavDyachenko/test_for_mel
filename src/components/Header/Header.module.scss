@@ -1,0 +1,22 @@
+@import "styles/mainStyle.scss";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $blackColor;
+    height: 100px;
+    &__title {
+        margin-left: 20px;
+        &_page {
+            position: relative;
+            bottom: 15px;
+            text-align: center;
+            @include font(18px, normal);
+            color: $whiteColor;
+        }
+    }
+    &__btn {
+        margin-right: 20px;
+    }
+}

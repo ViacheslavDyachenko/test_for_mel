@@ -131,7 +131,11 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset',
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: "/fonts/[name].[ext]",
+        }
       },    
     ],
   },
@@ -140,6 +144,7 @@ module.exports = {
     alias: {
         components: path.join(srcPath, 'components'),
         images: path.join(srcPath, 'images'),
+        fonts: path.join(srcPath, 'fonts'),
         pages: path.join(srcPath, 'pages'),
         store: path.join(srcPath, 'store'),
         styles: path.join(srcPath, 'styles'),

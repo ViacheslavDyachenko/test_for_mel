@@ -1,0 +1,9 @@
+.button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    &__star_btn {
+        width: 30px;
+        height: auto;
+    }
+}
