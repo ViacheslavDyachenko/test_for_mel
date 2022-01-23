@@ -1,7 +1,9 @@
+import Button from "components/Button";
 import Header from "components/Header"
 import PersonageTile from "components/PersonageTile"
 import DetailsPage from "pages/DetailsPage"
 import React from "react"
+import style from "./Favorites.module.scss"
 
 interface IProps {
     showDetails: boolean
@@ -61,6 +63,22 @@ class Favorites extends React.Component<IProps, IState> {
         this._isMounted = false;
     }
 
+    sortTile = (event: React.MouseEvent) => {
+        let personageList = this.state.personageTile;
+        personageList.sort((firstItem: {name: string}, secondItem: {name: string}) => {
+            if(firstItem.name > secondItem.name) {
+                return 1;
+            } else if(firstItem.name === secondItem.name) {
+                return 0
+            }
+            return -1;
+        })
+        this.setState({
+            personageTile: personageList,
+            showDetails: this.props.showDetails,
+        })
+    }
+
     showDetails = (event: React.MouseEvent): void => {
         this.setState({
             personageTile: this.state.personageTile,
@@ -87,6 +105,7 @@ class Favorites extends React.Component<IProps, IState> {
         return (
             <>
                 <Header page="favorites"/>
+                <Button onClick={this.sortTile} className={style.favorites__sort_btn} text="Отсортировать по имени" disabled={false} />
                 {this.state.personageTile.map((item, index) => {
                     return <PersonageTile 
                         index={index}

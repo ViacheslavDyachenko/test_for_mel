@@ -1,0 +1,12 @@
+@import "styles/mainStyle.scss";
+
+.favorites__sort_btn {
+    width: 150px;
+    height: 40px;
+    margin:  10px 50%;
+    transform: translateX(-50%);
+    background-color: $whiteColor;
+    color: $blackColor;
+    border: 1px solid $blackColor;
+    border-radius: 15px;
+}
